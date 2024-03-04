@@ -1,0 +1,2 @@
+[zitel]
+server1     ansible_host=188.213.199.123    ansible_user=ubuntu

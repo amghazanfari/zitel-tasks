@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  nginx:
+    image: docker.arvancloud.ir/nginx
+    container_name: nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - nginx
+    depends_on:
+      - flask-api
+  mongodb:
+    image: docker.arvancloud.ir/mongo:7
+    container_name: mongo
+    networks:
+      - mongo
+  flask-api:
+    image: amg76/flask-api
+    container_name: flask-api
+    environment:
+      MONGO_URL: "mongodb://mongodb:27017/"
+    depends_on:
+      - mongodb
+    networks:
+      - nginx
+      - mongo
+
+networks:
+  nginx:
+    driver: bridge
+  mongo:
+    driver: bridge

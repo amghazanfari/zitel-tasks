@@ -1,0 +1,11 @@
+[Unit]
+Description=Flask API Service
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/flask-api
+Environment="PATH=/opt/project_env/bin"
+ExecStart=/opt/project_env/bin/python main.py
+
+[Install]
+WantedBy=multi-user.target

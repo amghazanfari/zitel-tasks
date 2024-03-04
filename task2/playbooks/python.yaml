@@ -1,0 +1,36 @@
+---
+- name: install python flask api
+  hosts: zitel
+  become: true
+  tasks:
+    - name: install python3
+      apt:
+        pkg:
+          - python3
+          - python3-pip
+        state: latest
+    - name: Copy flask api code
+      copy:
+        src: "{{ playbook_dir }}/../../flask-api"
+        dest: /opt/
+    - name: install virtualenv
+      pip:
+        name: virtualenv
+        executable: pip3
+    - name: create a virtual environment
+      pip:
+        requirements: /opt/flask-api/requirements.txt
+        virtualenv: /opt/project_env
+        virtualenv_python: python3
+    - name: Copy service file for flask-api
+      copy:
+        src: "{{ playbook_dir }}/../static-files/flask-api.service"
+        dest: /etc/systemd/system/
+    - name: start flask-api service
+      systemd_service:
+        state: started
+        daemon_reload: true
+        enabled: true
+        name: flask-api
+    
+    

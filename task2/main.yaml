@@ -1,0 +1,4 @@
+---
+- import_playbook: playbooks/mongo.yaml
+- import_playbook: playbooks/python.yaml
+- import_playbook: playbooks/nginx.yaml
